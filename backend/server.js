@@ -1,23 +1,30 @@
-const express= require("express")
-const {chats}=require("./data/data.js")
-const dotenv =require("dotenv")
-const app=express()
-dotenv.config()
+//importing express
+const express = require("express");
+//importing chats
+const { chats } = require("./data/data");
+//importing an env file
+const dotenv = require("dotenv");
+//creating an instance for express
+const app = express();
+dotenv.config();
 
+//creating an api
+app.get("/", (req, res) => {
+  res.send("Api is running Succesfullly");
+});
 
-app.get('/',(req,res)=>{
+//creating an complex API
+app.get("/api/chat", (req, res) => {
+  res.send(chats);
+});
+//creating an another end point with the id's of data
 
- res.send("The API is running");
+app.get("/api/chat/:id", (req, res) => {
+  //   console.log(req.params.id);
+  const singleChat = chats.find((c) => c._id === req.params.id);
+  res.send(singleChat);
+});
 
+const PORT = process.env.PORT || 5000;
 
-})
-
-app.get('/chats',(req,res)=>{
-
-  res.send(chats)
-
-})
-
-const PORT=process.env.PORT||5000
-
-app.listen(5000,console.log('server started on port ${PORT}'));
+app.listen(5000, console.log("server has beeen started on port ${PORT}"));
