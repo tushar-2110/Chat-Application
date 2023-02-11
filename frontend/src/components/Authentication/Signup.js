@@ -22,7 +22,7 @@ const Signup = () => {
 
   const submitHandler = async () => {
     setPicLoading(true);
-    if (!name ||!email||!password ||!confirmpassword) {
+    if (!name || !email || !password || !confirmpassword) {
       toast({
         title: "Please Fill all the Feilds",
         status: "warning",
@@ -97,18 +97,15 @@ const Signup = () => {
       return;
     }
     console.log(pics);
-    if (pics.type === "image/jpeg" ||pics.type === "image/png") {
+    if (pics.type === "image/jpeg" || pics.type === "image/png") {
       const data = new FormData();
-
+      data.append("file", pics);
       data.append("upload_preset", "CHAT_APPLICATION");
       data.append("cloud_name", "chatappproject01");
-      fetch(
-        "https://api.cloudinary.com/v1_1/chatappproject01/image/upload",
-        {
-          method: "post",
-          body: data,
-        }
-      )
+      fetch("https://api.cloudinary.com/v1_1/chatappproject01/image/upload", {
+        method: "post",
+        body: data,
+      })
         .then((res) => res.json())
         .then((data) => {
           setPic(data.url.toString());
@@ -132,7 +129,7 @@ const Signup = () => {
     }
   };
 
-return (
+  return (
     <VStack spacing="5px">
       <FormControl id="first-name" isRequired>
         <FormLabel>Name</FormLabel>
